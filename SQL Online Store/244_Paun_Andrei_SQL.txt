@@ -1,0 +1,789 @@
+create table departament( 
+    id_departament integer, 
+    nume varchar(100), 
+    locatie varchar(100), 
+    tip varchar(100), 
+    nr_angajati integer 
+); 
+alter table departament 
+add constraint pk_departament primary key (id_departament); 
+
+
+insert into departament
+values (10,'AS1', 'Bucuresti', 'Asamblare', 100);
+ 
+insert into departament
+values (15,'AS2', 'Bucuresti', 'Asamblare', 75);
+ 
+insert into departament
+values (20,'HR1', 'Roma', 'Human Resources', 30);
+ 
+insert into departament
+values (23,'AS3', 'Bucuresti', 'Asamblare', 50);
+ 
+insert into departament
+values (30,'MG2', 'Londra', 'Management', 100);
+ 
+insert into departament
+values (37,'LIV1', 'Roma', 'Livrari', 15);
+
+
+select * from departament;
+--commit;
+
+
+
+create table echipa( 
+    id_echipa integer, 
+    nr_membrii integer, 
+    nume_echipa varchar(100), 
+    sef_echipa varchar(100) 
+); 
+
+alter table echipa 
+add constraint pk_echipa primary key (id_echipa); 
+
+insert into echipa 
+values(21,4,'Echipa1','Smith'); 
+
+insert into echipa 
+values(561,5,'Echipa2','Spataru'); 
+
+insert into echipa 
+values(537,6,'Echipa3','Romero'); 
+
+insert into echipa 
+values(87,7,'Echipa4','Elliot'); 
+
+insert into echipa 
+values(123,8,'Echipa5','Mobley'); 
+
+insert into echipa 
+values(568,5,'Echipa6','Bigby'); 
+
+select * from echipa;
+
+
+
+create table furnizor( 
+    CUI integer, 
+    nume varchar(100), 
+    data_incepere_contract date, 
+    data_finalizare_contract date 
+
+); 
+
+alter table furnizor 
+add constraint pk_furnizor primary key (CUI); 
+
+insert into furnizor 
+values (1325,'Smith','23/jan/2019', '24/jan/2023'); 
+
+insert into furnizor 
+values (34576,'Will','04/apr/2020','24/jan/2022'); 
+
+insert into furnizor 
+values (145,'Spataru','21/may/2019','24/jan/2020'); 
+
+insert into furnizor 
+values (14978,'Mihai','14/apr/2018','24/jan/2021'); 
+
+insert into furnizor 
+values (345,'Smith','22/jun/2019','24/jan/2020'); 
+
+insert into furnizor 
+values (1636,'Niell','09/sep/2017','24/jan/2019');
+
+select * from furnizor;
+
+
+create table curier( 
+    id_curier integer, 
+    nume varchar(100), 
+    prenume varchar(100), 
+    livrari_lunare integer, 
+    data_incepere_contract date, 
+    data_finalizare_contract date 
+); 
+
+alter table curier 
+add constraint pk_curier primary key (id_curier); 
+
+insert into curier 
+values (53,'Dorotei','Basarab',20,'20/oct/2002','25/dec/2002'); 
+
+insert into curier 
+values (65,'Martin','Costello',30,'15/nov/2004','25/jan/2005'); 
+
+insert into curier 
+values (78,'Coacher','Mark',25,'17/apr/2005','20/apr/2006'); 
+
+insert into curier 
+values (48,'Lawyer','Mark',10,'10/may/2006','25/dec/2007'); 
+
+insert into curier 
+values (60,'Florentino','Ella',40,'30/jun/2002','25/dec/2002'); 
+
+insert into curier 
+values (11,'Riley','Sarah',30,'11/dec/2010','25/dec/2011'); 
+
+select * from curier;
+
+
+
+create table angajat( 
+    id_angajat integer,
+    id_echipa integer,
+    id_departament integer, 
+    nume varchar(100), 
+    prenume varchar(100), 
+    salariu float, 
+    data_angajare date, 
+    functie varchar(100), 
+    nr_proiecte integer 
+); 
+
+alter table angajat 
+add constraint pk_angajat primary key (id_angajat); 
+alter table angajat 
+add constraint fk_angajat_echipa foreign key (id_echipa) references echipa(id_echipa); 
+alter table angajat 
+add constraint fk_angajat_dep foreign key (id_departament) references departament(id_departament); 
+
+
+
+insert into angajat
+values(346,21,10,'Smith','Elliot',4500,'05/jun/2002','Asamblare',30);
+ 
+insert into angajat
+values(7625,21,15,'Alderson','Darlene',3000,'09/jan/2002','Asamblare',25);
+ 
+insert into angajat
+values(467,21,23,'Romero','Alexander',4500,'15/sep/2002','Asamblare',40);
+ 
+insert into angajat
+values(2398,87,30,'Alderson','William',6000,'20/oct/2002','Sef de departament',0);
+ 
+insert into angajat
+values(1346,123,37,'Spataru','Ion',5100,'25/dec/2002','Resurse Umane',0);
+
+insert into angajat
+values(345,87,20,'Shawny','Mobley',2500,'11/apr/2002','Marketing',0);
+
+select * from angajat;
+--commit;
+
+
+create table sistem( 
+    id_sistem integer,
+    id_curier integer,
+    nume_echipa varchar(100), 
+    membrii_echipa integer, 
+    buget integer, 
+    data_start date, 
+    data_finish date 
+); 
+
+alter table sistem 
+add constraint pk_sistem primary key (id_sistem); 
+alter table sistem
+add constraint fk_sistem foreign key (id_curier) references curier (id_curier);
+
+insert into sistem 
+values (10,53, 'Echipa1',5, 2000, '20/jan/2022','25/jan/2022'); 
+
+insert into sistem 
+values (20,65,'Echipa1',6, 3000, '12/nov/2022','16/nov/2022'); 
+
+insert into sistem 
+values (30,11, 'Echipa1',7, 4300, '23/apr/2022','24/apr/2022'); 
+
+insert into sistem 
+values (40,11, 'Echipa3',8, 5000, '14/may/2022','16/may/2022'); 
+
+insert into sistem 
+values (50,53, 'Echipa3',4, 3700, '05/jun/2022','05/jun/2022'); 
+
+insert into sistem 
+values (60,11, 'Echipa6',5, 1500, '09/jul/2022','25/jul/2022'); 
+
+select * from sistem;
+ 
+ 
+create table client( 
+    id_client integer, 
+    nume varchar(100), 
+    prenume varchar(100), 
+    discount integer 
+); 
+
+alter table client 
+add constraint pk_client primary key(id_client); 
+
+
+insert into client
+values (213, 'Dorotei', 'Basarab',10);
+ 
+insert into client
+values (414, 'George', 'Anghel',13);
+ 
+insert into client
+values (252, 'Dorotei', 'Leo',9);
+ 
+insert into client
+values (6267, 'Eusebiu', 'Mihai',5);
+ 
+insert into client
+values (1346, 'Sebastian', 'Marco',21);
+ 
+insert into client
+values (3416, 'Cabut', 'Carl',15);
+
+select * from client;
+
+
+create table depozit( 
+    id_depozit integer, 
+    nume varchar(100), 
+    locatie varchar(100), 
+    nr_componente integer 
+); 
+
+alter table depozit     
+add constraint pk_depozit primary key (id_depozit); 
+
+insert into depozit 
+values(14,'Depozit1','Bucuresti',200); 
+  
+insert into depozit 
+values(346,'Depozit2','Roma',150); 
+  
+insert into depozit 
+values(537,'Depozit3','Oxford',220); 
+
+insert into depozit 
+values(324,'Depozit4','Bucuresti',210); 
+
+insert into depozit 
+values(345,'Depozit5','Belgia',100); 
+
+insert into depozit 
+values(349,'Depozit6','Bucuresti',120); 
+
+insert into depozit 
+values (76, 'Depozit7' ,'Paris' , 15); 
+
+select * from depozit;
+
+
+create table componenta( 
+    serial_number integer,
+    CUI integer, 
+    id_depozit integer,
+    id_sistem integer,
+    producator varchar(100), 
+    tip varchar(100), 
+    pret float, 
+    cantitate_stoc integer 
+); 
+
+alter table componenta 
+add constraint pk_componenta primary key (serial_number); 
+alter table componenta 
+add constraint fk_componenta_furnizor foreign key (CUI) references furnizor(CUI); 
+alter table componenta 
+add constraint fk_componenta_depozit foreign key (id_depozit) references depozit(id_depozit); 
+alter table componenta 
+add constraint fk_componenta_sistem foreign key (id_sistem) references sistem(id_sistem); 
+
+insert into componenta 
+values (146352,145 ,14 , 10, 'ASUS', 'Placa video',450.99,20); 
+
+insert into componenta 
+values (5216436,145 ,76 ,20 ,  'Gigabyte', 'Placa de baza',432.99,15); 
+
+insert into componenta 
+values (734562,345 ,345 , 20,  'MSI', 'Placa video',345.99,5); 
+
+insert into componenta 
+values (523465,1325 , 345,30 ,  'Intel', 'Procesor',234.99,25); 
+
+insert into componenta 
+values (71354,345 ,349 , 10,  'AMD', 'Procesor',312.99,64); 
+
+insert into componenta 
+values (423765,145, 537, 20,  'ASUS', 'Carcasa',654.99,34); 
+
+select * from componenta;
+
+
+
+
+
+
+create table cupon( 
+    id_cupon integer, 
+    id_client integer, 
+    discount float, 
+    data_expirare date 
+); 
+
+alter table cupon 
+add constraint pk_cupon primary key (id_cupon); 
+
+alter table cupon 
+add constraint fk_cupon foreign key (id_client) references client(id_client); 
+
+insert into cupon 
+values (34,213,10,'05/feb/2023'); 
+
+insert into cupon 
+values (25,3416,15,'05/jan/2023'); 
+
+insert into cupon 
+values (246,1346,21,'05/apr/2022'); 
+
+insert into cupon 
+values (363,6267,5,'05/may/2022'); 
+
+insert into cupon 
+values (367,252,9,'05/oct/2022'); 
+
+insert into cupon 
+values (6725,414,13,'25/jan/2023'); 
+
+select * from cupon;
+
+
+
+
+---Tabele asociative---
+
+create table comanda( 
+    id_sistem integer, 
+    id_client integer, 
+    nr_comanda integer 
+); 
+
+alter table comanda 
+add constraint pk_comanda primary key (id_sistem,id_client); 
+
+insert into comanda 
+values(10,213,147); 
+
+insert into comanda 
+values(20,414,68); 
+
+insert into comanda 
+values(30,252,3); 
+
+insert into comanda 
+values(40,6267,563); 
+
+insert into comanda 
+values(50,1346,234); 
+
+insert into comanda 
+values(60,3416,798); 
+
+insert into comanda 
+values(70,78,75); 
+
+insert into comanda 
+values(80,325,37); 
+
+insert into comanda 
+values(90,685,47); 
+
+insert into comanda 
+values(99,345,235); 
+
+select * from comanda;
+--commit;
+
+
+create table asambleaza( 
+    id_echipa integer, 
+    id_sistem integer, 
+    durata_asamblare integer --(in zile)
+); 
+
+alter table asambleaza 
+add constraint pk_asambleaza primary key (id_sistem,id_echipa); 
+
+insert into asambleaza 
+values(21,10,20); 
+
+insert into asambleaza 
+values(21,20,30); 
+
+insert into asambleaza 
+values(21,30,22); 
+
+insert into asambleaza 
+values(561,40,40); 
+
+insert into asambleaza 
+values(537,50,0); 
+
+insert into asambleaza 
+values(568,60,10); 
+
+insert into asambleaza 
+values(123,70,10); 
+
+insert into asambleaza 
+values(123,80,10); 
+
+insert into asambleaza 
+values(87,90,10); 
+
+insert into asambleaza 
+values(568,99,10); 
+
+--select * from asambleaza;
+
+
+-------------------------------------------------------------------------------------------------
+
+
+--Ex 6
+--pentru un buget dat, pentru fiecare sistem cu un buget mai mare decat cel specificat,
+--sa se afiseze o lista cu toti curierii care au livrat sisteme mai scumpe decat bugetul specificat,
+-- Sa se prelungeasca cu 2 luni contractele curierilor gasiti
+
+
+create or replace procedure Ex6 (bugetDat sistem.buget%type)
+AS
+    type tablou_imbricat is table of curier%rowtype;
+    listaCurieri tablou_imbricat := tablou_imbricat();
+    
+    nrListaCurieri number;
+    
+    type tablou_indexat is table of curier.data_finalizare_contract%type index by PLS_INTEGER;
+    listaCurieriContract tablou_indexat;
+    numeCurier curier.nume%type;
+
+Begin
+    select count(*) into nrListaCurieri
+    from sistem s , curier c 
+    where s.buget >= bugetDat and s.id_curier = c.id_curier;
+        
+    
+    listaCurieri.extend(nrListaCurieri);
+    
+
+    for i in 1..nrListaCurieri-1 loop
+        select DISTINCT c.* bulk collect into listaCurieri
+        from curier c join sistem s on c.id_curier = s.id_curier
+        where s.buget >= bugetDat;
+       DBMS_OUTPUT.PUT('Id:' || listaCurieri(i).id_curier || ' ');
+       
+        numeCurier := listaCurieri(i).nume;
+        
+        dbms_output.put_line('Nume: ' || numeCurier);
+        
+        dbms_output.put(listaCurieri(i).data_finalizare_contract || ' -> ');
+        
+       
+               
+                listaCurieriContract(i) := listaCurieri(i).data_finalizare_contract;
+                
+                listaCurieriContract(i) := ADD_MONTHS(to_date(listaCurieriContract(i)), 2);
+                
+                        DBMS_OUTPUT.PUT_LINE(listaCurieriContract(i));
+
+    end loop;
+
+End;
+/
+
+
+begin
+    Ex6(3500);
+end;
+/
+
+
+
+--Ex7
+-- pentru departamentele care sunt de asamblare, afisati numele departamentelor si
+-- angajatii care au salariul mai mare de 3100 din aceste departamente
+
+CREATE OR REPLACE PROCEDURE Ex7(tip_departament departament.tip%type)
+AS
+
+    CURSOR departamente IS
+            SELECT nume, tip
+            FROM departament
+            WHERE tip = tip_departament;
+            
+    CURSOR angajati (tipDepart departament.tip%type) IS
+            SELECT nume, prenume
+            FROM angajat 
+            WHERE salariu >= 3100 AND functie like tipDepart;
+            
+            
+    TYPE tabel_nume IS TABLE OF angajat.nume%TYPE;
+    TYPE tabel_prenume IS TABLE OF angajat.prenume%TYPE;
+    nume_angajati tabel_nume;
+    prenume_angajati tabel_prenume;
+            
+BEGIN
+
+    FOR departament in departamente LOOP
+         DBMS_OUTPUT.PUT_LINE(departament.nume);
+
+            OPEN angajati (departament.tip);
+                FETCH angajati BULK COLLECT INTO nume_angajati, prenume_angajati;
+                    
+            CLOSE angajati;
+    END LOOP;
+    
+    FOR i IN nume_angajati.FIRST .. nume_angajati.LAST LOOP
+        DBMS_OUTPUT.PUT_LINE(nume_angajati(i) || ' ' || prenume_angajati(i));
+    END LOOP;
+    
+END;
+/
+
+begin
+    Ex7('Asamblare');
+end;
+/
+
+-------------------------------------------------------------------------------
+
+--ex8
+
+--Sa se afiseze id-ul celui mai nou angajat al companiei, care a lucrat pentru cel putin 5 ani si a 
+-- participat la cel putin 20 de proiecte
+-- Daca este sef de echipa, sa se afiseze si echipa
+
+CREATE OR REPLACE FUNCTION Ex8(param_department_id departament.id_departament%type)
+RETURN INTEGER IS
+     employee_id INTEGER;
+     v_tip departament.tip%type;
+     v_nume_echipa echipa.nume_echipa%type;
+
+
+    WRONG_DEPARTMENT EXCEPTION;
+
+     
+    BEGIN
+        
+        select tip into v_tip
+        from departament
+        where param_department_id = id_departament;
+        
+        if v_tip <> 'Asamblare' then
+            RAISE WRONG_DEPARTMENT;
+        end if;
+    
+        SELECT a.id_angajat, e.nume_echipa
+            INTO employee_id, v_nume_echipa
+        FROM angajat a
+            JOIN departament d ON a.id_departament = d.id_departament
+            JOIN echipa e ON a.id_echipa = e.id_echipa
+        WHERE EXTRACT(YEAR FROM SYSDATE) - EXTRACT (YEAR from a.data_angajare) >= 5
+        AND a.nr_proiecte > 20
+        AND d.id_departament = param_department_id
+        ORDER BY a.data_angajare DESC;
+        
+        
+        DBMS_OUTPUT.PUT_LINE('Angajatul cu id-ul '||employee_id||' este seful echipei '||v_nume_echipa||'.');
+        
+        RETURN employee_id;
+        
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Nu s-a gasit angajatul');
+        WHEN WRONG_DEPARTMENT THEN
+            RAISE_APPLICATION_ERROR(-20002, 'Departamentul nu este de asamblare');
+   
+END;
+/
+
+begin
+    dbms_output.put_line(Ex8(10));
+end;
+/
+
+--no data found 
+begin
+    dbms_output.put_line(Ex8(14716941));
+end;
+/
+
+--wrong department type
+begin
+    dbms_output.put_line(Ex8(20));
+end;
+/
+
+
+
+
+
+--Ex9
+
+--Pentru un curier al carui ID este precizat, sa se afiseze discount-ul cuponului care apartine unui client
+-- ce a primit la un moment dat un sistem de la curierul respectiv, cu discountul respectiv mai mic decat o valoare data,
+-- si care a durat mai mult de 2 zile sa fie asamblat
+
+CREATE OR REPLACE PROCEDURE Ex9 (id_curier_param IN NUMBER, max_discount IN NUMBER)
+AS
+    discount_cupon FLOAT;
+    nume_curier VARCHAR2(100);
+    prenume_curier VARCHAR2(100);
+    nume_client VARCHAR2(100);
+    prenume_client VARCHAR2(100);
+BEGIN
+    SELECT c.discount, cr.nume, cr.prenume, cl.nume, cl.prenume
+    INTO discount_cupon, nume_curier, prenume_curier, nume_client, prenume_client
+    FROM comanda co
+        JOIN sistem s ON co.id_sistem = s.id_sistem
+        JOIN curier cr ON s.id_curier = cr.id_curier
+        JOIN client cl ON co.id_client = cl.id_client
+        JOIN cupon c ON c.id_client = cl.id_client
+    WHERE s.id_curier = id_curier_param
+    AND c.discount <= max_discount
+    AND s.data_finish - s.data_start >= 2;
+    
+    DBMS_OUTPUT.PUT_LINE('Nume Curier: ' || nume_curier);
+    DBMS_OUTPUT.PUT_LINE('Prenume Curier: ' || prenume_curier);
+    DBMS_OUTPUT.PUT_LINE('Nume Client: ' || nume_client);
+    DBMS_OUTPUT.PUT_LINE('Prenume Client: ' || prenume_client);
+    DBMS_OUTPUT.PUT_LINE('Discount: ' || discount_cupon || ' ');
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20005, 'Nu exista clienti');
+    
+    WHEN TOO_MANY_ROWS THEN
+        RAISE_APPLICATION_ERROR(-20006 , 'Prea multi clienti cu acelasi nume');
+        
+END;
+/
+
+
+Begin
+    Ex9(65,21);
+end;
+/
+
+
+--no data found
+begin 
+    Ex9(122,10);
+end;
+/
+
+--too many rows
+BEGIN 
+  Ex9(11, 20); 
+END;
+/
+
+
+--ex10
+--trigger de tip LMD la nivel de comanda
+--care nu permite adaugarea unui nou furnizor, daca sunt deja 6, sau daca nu exista
+--nici macar un furnizor caruia i s-a incheiat contractul
+
+CREATE OR REPLACE TRIGGER trigger_10
+   BEFORE INSERT ON furnizor
+DECLARE
+    nrFurnizori number;
+    nrContracteIncheiate number;
+BEGIN
+
+    select count(CUI) 
+    into nrFurnizori
+    from furnizor;
+    
+    select count(data_finalizare_contract)
+    into nrContracteIncheiate
+    from furnizor
+    where data_finalizare_contract <= sysdate;
+    
+    if nrFurnizori >= 6 OR nrContracteIncheiate = 0 then
+        RAISE_APPLICATION_ERROR(-20001,'Nu se mai pot inregistra furnizori');
+    end if;
+    
+END;
+/
+-- Declansare trigger
+insert into furnizor
+values(222,'xd','23/jan/2019','24/jan/2019');
+-- Sterge trigger
+DROP TRIGGER trigger_10;
+/
+
+
+
+--ex11
+--trigger de tip LMD la nivel de linie
+--care nu lasa sa fie adaugata o noua componenta in tabela, daca producatorul acesteia
+-- este 'Marvo' , iar pretul e mai mare de 1000 de lei.
+
+CREATE OR REPLACE TRIGGER trigger_11
+AFTER INSERT ON componenta
+FOR EACH ROW
+DECLARE
+    numeProducator componenta.producator%type;
+    valoarePret componenta.pret%type;
+BEGIN
+    numeProducator := :NEW.producator;
+    valoarePret := :NEW.pret;
+
+    IF (numeProducator = 'Marvo' AND valoarePret > 1000) THEN
+        RAISE_APPLICATION_ERROR(-20001,'Pret prea ridicat pentru produsele Marvo!');    
+    END IF;
+END;
+/
+--declansare trigger
+insert into componenta 
+values (9999,1325 , 345,30 ,  'Marvo', 'Procesor',1200,25); 
+--stergere trigger
+DROP TRIGGER trigger_11;
+/
+
+--ex12
+-- trigger de tip LDD care monitorizeaza toate modificarile de aceasta natura
+-- create, drop, alter
+
+CREATE TABLE monitor_activitate (
+    utilizator VARCHAR2(50),
+    nume_bd VARCHAR2(50),
+    eveniment VARCHAR2(50),
+    data_realizarii DATE
+);
+
+select * from monitor_activitate;
+
+CREATE OR REPLACE TRIGGER trigger_12
+    AFTER CREATE OR ALTER OR DROP ON SCHEMA
+BEGIN
+    INSERT INTO monitor_activitate 
+    VALUES(SYS.LOGIN_USER, SYS.DATABASE_NAME, SYS.SYSEVENT, SYSDATE);
+END;
+/
+
+CREATE TABLE test_employee( 
+    test_id NUMBER,
+    nume VARCHAR2(60)
+);
+alter table test_employee
+add constraint pk_test_employee primary key(test_id);
+                   
+ALTER TABLE test_employee 
+ADD ( prenume VARCHAR2(60));
+
+ALTER TABLE test_employee
+DROP COLUMN prenume;
+
+DROP TABLE test_employee;
+
+SELECT *
+FROM monitor_activitate;
