@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Lista categorii";
+}
+
+<h2 style="color:white" >@ViewBag.Title</h2>
+
+<style>
+    body{
+        background-color: #3A506B;
+        color:white;
+    }
+</style>
+
+
+<br />
+
+@if (TempData.ContainsKey("message"))
+{
+    <h1>@ViewBag.message</h1>
+}
+
+<a href="/Products/Index">Inapoi la produse</a>
+<br />
+<br />
+
+@foreach (var category in ViewBag.Categories)
+{
+    @Html.Label("CategoryName", "Denumire categorie")
+    <p style="color: white">@category.CategoryName</p>
+    <a class="btn alert-success" href="/Categories/Show/@category.Id">Afisare categorie</a>
+    <a class="btn alert-success" href="/Categories/Edit/@category.Id">Editare categorie</a>
+    <br />
+    <hr />
+    <br />
+}
+<br />
+<a style="background-color:#0B132B" class="btn btn-success" href="/Categories/New">Adauga o noua categorie</a>
+<br />
+

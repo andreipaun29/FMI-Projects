@@ -1,0 +1,63 @@
+﻿@model PetShopApp.Models.Product
+
+
+<style>
+    body {
+        background-color: #3A506B;
+        color:white;
+    }
+</style>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Products", method: FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+    @Html.Label("Title", "Denumire Produs")
+    <br />
+    @Html.TextBox("Title", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+    <br />
+    <br />
+    @Html.Label("Description", "Descriere Produs")
+    <br />
+    @Html.TextArea("Description", null, new { @class = "form-control" })
+    @Html.ValidationMessage("Description", null, new { @class = "text-danger" })
+    <br />
+
+
+    @Html.Label("Price", "Pret Produs")
+    <br />
+    @Html.TextBox("Price", null, new { @class = "form-control" })
+    @Html.ValidationMessage("Price", null, new { @class = "text-danger" })
+    
+    
+
+    <br />
+
+    @Html.Label("Rating", "Rating Produs")
+    <br />
+    @Html.DropDownList("Rating", Enumerable.Range(1, 5)
+            .Select(x => new SelectListItem { Text = x.ToString(),
+            Value = x.ToString() }));
+    <br />
+    <br />
+
+    <div class="form-control">
+        <label asp-for="File">Image</label>
+        <input asp-for="File" class="form-control" accept="image/png, image/gif, image/jpeg" />
+    </div>
+    @Html.ValidationMessageFor(b => b.File, null, new { @class = "text-danger" })
+    
+    
+    <br />
+    <br />  
+    
+    <label>Selectati categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
+"Selectati categoria", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
+    <br />
+    <br />
+    <button style="background-color:#0B132B" class="btn btn-success" type="submit">Adauga produs</button>
+    <br />
+    <br />
+}
